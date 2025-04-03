@@ -30,15 +30,34 @@ class AnimalCRUD:
     
     def ordenar_animales(self, criterio):
         if criterio == "nombre":
-            self.animales.sort(key=lambda x: x[0])
+            self.animales = sorted(self.animales, key=lambda x: x[0])
         elif criterio == "especie":
-            self.animales.sort(key=lambda x: x[1])
+            self.animales = sorted(self.animales, key=lambda x: x[1])
         elif criterio == "edad":
-            self.animales.sort(key=lambda x: x[2])
+            self.animales = sorted(self.animales, key=lambda x: x[2])
         else:
             print("Criterio no válido.")
             return
         print(f"Animales ordenados por {criterio} correctamente.")
+    
+    def invertir_lista(self):
+        self.animales = list(reversed(self.animales))
+        print("Lista de animales invertida correctamente.")
+    
+    def calcular_edades(self):
+        if not self.animales:
+            print("No hay animales registrados.")
+            return
+        edades = [edad for _, _, edad in self.animales]
+        print(f"Edad mínima: {min(edades)} años, Edad máxima: {max(edades)} años, Suma total de edades: {sum(edades)} años")
+    
+    def verificar_condiciones(self):
+        if not self.animales:
+            print("No hay animales registrados.")
+            return
+        edades = [edad for _, _, edad in self.animales]
+        print(f"¿Algún animal tiene más de 10 años?: {any(edad > 10 for edad in edades)}")
+        print(f"¿Todos los animales tienen al menos 1 año?: {all(edad >= 1 for edad in edades)}")
     
 # Ejecución del menú
 crud = AnimalCRUD()
@@ -49,7 +68,10 @@ while True:
     print("3. Actualizar Animal")
     print("4. Eliminar Animal")
     print("5. Ordenar Animales")
-    print("6. Salir")
+    print("6. Invertir Lista de Animales")
+    print("7. Calcular Edades")
+    print("8. Verificar Condiciones")
+    print("9. Salir")
     
     opcion = input("Seleccione una opción: ")
     
@@ -75,6 +97,12 @@ while True:
         criterio = input("Ingrese el criterio de ordenamiento (nombre, especie, edad): ")
         crud.ordenar_animales(criterio)
     elif opcion == "6":
+        crud.invertir_lista()
+    elif opcion == "7":
+        crud.calcular_edades()
+    elif opcion == "8":
+        crud.verificar_condiciones()
+    elif opcion == "9":
         print("Saliendo del programa...")
         break
     else:
